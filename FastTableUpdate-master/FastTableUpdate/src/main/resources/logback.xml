@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE logback>
+<configuration>
+	<property name="MAXHISTORY" value="100" />
+	<property name="DATETIME" value="yyyy/MM/dd HH:mm:ss" />
+	<timestamp key="byDay" datePattern="yyyyMMdd'T'HHmmss"/>
+	
+	<!-- Console printing -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder charset="utf-8">
+			<pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} - %m%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	 <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+      <file>./ftu-${byDay}.log </file>
+      <append>true</append>
+      <encoder charset="utf-8">
+        <!--  <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern> -->
+         <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} - %msg%n </pattern>
+      </encoder>
+   </appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>

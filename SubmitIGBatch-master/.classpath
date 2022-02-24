@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/05_CKP/ExtJars/ig/csc-smart400-batch-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/05_CKP/ExtJars/HikariCP-3.4.2.jar"/>
+	<classpathentry kind="lib" path="D:/05_CKP/ExtJars/httpclient-4.2.5.jar"/>
+	<classpathentry kind="lib" path="D:/05_CKP/ExtJars/http-core-4.1.jar"/>
+	<classpathentry kind="lib" path="D:/05_CKP/ExtJars/jcommander.jar"/>
+	<classpathentry kind="lib" path="D:/05_CKP/ExtJars/json-simple-1.1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

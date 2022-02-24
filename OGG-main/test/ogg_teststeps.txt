@@ -1,0 +1,25 @@
+We have steps to test with screenshots in word document.
+
+--- Test1. Simple steps to check OGG sync. Here it does SQL update directly on source and expect the sync in target---
+
+---- Action on Source----
+select * from busdpf order by datime desc; --- check current values
+update busdpf set busdate=20210829 where company=2;--- before change:20150101 --- for testing purpose change company 2 value.
+
+
+---- Check on Target----
+select * from busdpf order by datime desc; --- check current values and check after the sync
+
+--- Test2. For transactional test the login id should have rights:
+UPDATE VM1DTA.USRDPF
+SET GROUPNAME ='ZW-ADMIN1'
+WHERE USERID IN('JPASRJ')
+AND GROUPNAME ='IT-APM1'; -- To perform online operations like NB & Alteration.
+ 
+UPDATE VM1DTA.USRDPF
+SET GROUPNAME ='IT-APM1'
+WHERE USERID IN('JPASRJ')
+AND GROUPNAME ='ZW-ADMIN1'; -- To submit batch jobs & Business Date Change.
+
+
+

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Normal console appender -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %-5level [%thread] %logger - %message%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File rolling appender -->
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:\CKP\IGLogs\group\myTest-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %-5level [%thread] %logger - %message%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- Turn off some annoying logger -->
+    <logger name="com.quipoz.COBOLFramework.database.connection" level="OFF" additivity="false">
+    </logger>
+    <logger name="org.hibernate" level="OFF" additivity="false">
+    </logger>
+
+    <!-- Logger for integral -->
+    <logger name="com.csc" level="ERROR" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="com.quipoz" level="INFO" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="org.apache.jsp" level="ERROR" additivity="false">
+    	<!-- <appender-ref ref="console" /> -->
+    	<appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="org.springframework" level="ERROR" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+		<appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="com.csc.database.IntegralDataSource" level="INFO" additivity="false">
+    </logger>
+    <!-- Logger for connection pool (HikariCP) -->
+    <logger name="com.zaxxer" level="INFO" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger>
+    
+    <!-- CKP:20210508 Added for checking batch stuck -->
+     <logger name="com.csc.smart.procedures.Bmanmthrdb" level="DEBUG" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="com.csc.smart400framework.dataaccess.SmartFileCode" level="DEBUG" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger>
+        
+    <logger name="com.quipoz.COBOLFramework.util.COBOLConvCodeModel" level="DEBUG" additivity="false">
+       <!--  <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger> 
+
+    <logger name="odm" level="DEBUG" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger>
+    
+    <logger name="helper" level="DEBUG" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger>
+    
+    <logger name="com.csc.zurich.interfaces" level="ERROR" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger>
+    
+    <logger name="com.csc.zurich.interfaces.adapter.ODMSOAPPaAdapter" level="ERROR" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+        <appender-ref ref="rollingFile" />
+    </logger>
+    
+    
+    <root level="ERROR">
+       <!-- <appender-ref ref="console" />  -->
+		<appender-ref ref="rollingFile" />
+    </root>
+</configuration>

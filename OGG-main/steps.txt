@@ -1,0 +1,31 @@
+Planned steps:
+1: Change the PRD21 DB to no archive mode. 
+2: execute script to change unique_number to “Generate always”
+3: export of PRD21
+4: import PRD23 using PRD21 backup
+5: configure OGG in both PRD21 and PRD23 instance
+6: testing 
+
+Tried Steps on 20210828-failed.
+1: Change the PRD21 DB to no archive mode. 
+2: export of PRD21
+4: import PRD23 using PRD21 backup
+5: configure OGG in both PRD21 and PRD23 instance
+6: execute script to change unique_number from “Generate Identity always” to use sequence on PRD21.
+
+Tried Steps on 20210829
+1: Change the PRD21 DB to no archive mode. 
+2. execute script to change unique_number to “Generate always”
+3: export of PRD21
+4: import PRD23 using PRD21 backup
+5: configure OGG in both PRD21 and PRD23 instance ( Do not forget to set supplemental log)
+6: test simple.--- Here we found the issues that the OGG tried to create the sequence which are executed above "Tried Steps on 20210828, step 6." To solve that we deleted the sequences like SEQ_GG_*. Then it proceeded but giving the issue of OGG-01296, for which issue#1 is loggeed.
+
+Tried Steps on 20210926
+1: Change the PRD21 DB to no archive mode. Status:Done
+2. execute script to change unique_number to “Generate always”.  Status:Done
+3: export of PRD21.  Status:Done
+4: import PRD23 using PRD21 backup.  Status:Done?
+5: configure OGG in both PRD21 and PRD23 instance ( Do not forget to set supplemental log). Status:Done?
+6: test simple. Status:Done?
+

@@ -1,0 +1,139 @@
+Step 0: On the source database apply supplemental logging --- Added by Chandan :20211021
+ALTER DATABASE SUPPLEMENT LOG
+I think ADD SCHEMATRADATA could be better option.
+ADD SCHEMATRANDATA VM1DTA
+
+Step 1:
+start all OGG Services (Service Manager , Admin server, Distributor , Receiver Service)
+ a)source the environment file
+    ORACLE_SID=igprd23
+JAVA_HOME=/opt/app/ogg/ma/jdk
+PATH=/opt/app/ogg/ma/jdk/bin:/opt/app/ogg/ma/bin:$PATH
+LIBPATH=/opt/app/ogg/ma/lib:/opt/app/oracle/product/19.0.0/dbhome_1/lib:$LIBPATH
+TNS_ADMIN=/opt/app/oracle/product/19.0.0/dbhome_1/network/admin
+HOSTNAME=jpaigdbp02
+OGG_HOME=/opt/app/ogg/ma
+OGG_CONF_HOME=/opt/app/ogg/ma/etc/conf
+OGG_SSL_HOME=/opt/app/ogg/ma/etc/ssl
+OGG_DATA_HOME=/opt/app/ogg/ma/var/lib/data
+OGG_VAR_HOME=/opt/app/ogg/srvmgr/igprd23/var
+OGG_ETC_HOME=/opt/app/ogg/srvmgr/igprd23/var
+OGG_DEPLOYMENT_SRV=/opt/app/ogg/srvmgr/igprd23/bin
+export JAVA_HOME
+export PATH
+export LIBPATH
+export OGG_HOME
+export OGG_CONF_HOME
+export OGG_SSL_HOME
+export OGG_DATA_HOME
+export OGG_VAR_HOME
+export OGG_ETC_HOME
+export TNS_ADMIN
+export HOSTNAME
+
+ b) start OGG Service
+    cd $OGG_HOME/bin
+    ServiceManager
+ c) Check the service
+    ps -ef |grep ogg
+
+Stpe 2 : Deploy Database instance for new configuration
+======================================================
+  a) modify /opt/ig/ogg/fbo_ggs_AIX_ppc_services_shiphome/Disk1/response/oggca_<SID>_add_ma.rsp
+  b) execute the given below command 
+/opt/app/ogg/ma/bin/oggca.sh -silent -responseFile /opt/ig/ogg/fbo_ggs_AIX_ppc_services_shiphome/Disk1/response/oggca_igprd23_add_ma.rsp
+
+Step 2 : Database setup 
+         edit tns Entry in TNSADMIN.ora file 
+         cd $TNS_ADMIN
+         tnsadmin.ora
+         
+         in Service Manager (Configuration)
+                
+         http://jpaigdbp03:8200/?root=account
+         double click deployment eg igprd23
+         click Configuration tab - edit
+         add TNS Entry details
+
+step 3: add user in Service Manager and Admin server
+        
+         
+         in Service Manager 
+                
+         http://jpaigdbp03:8200/?root=account
+    Administrator
+    Click + button Add user
+    
+        in Admin server
+          http://jpaigdbp03:8201
+          Configuration - Database - + Credential
+
+        Restart (All OGG Services)
+ 
+ step 4 : Extract process
+ 
+          in Admin server
+          http://jpaigdbp03:8201
+          
+          Click + Extract 
+          Add integrate Extract
+             give Extract detail
+             extract name
+             Process Name:
+			Description:
+			Intent:
+			Unidirectional
+			Create new credential
+
+			Credential Domain:
+			Credential Alias:
+			Begin:
+			Now
+			Trail Name:
+			
+			
+			
+			Click NEXT
+			
+			Enter Extract Parameter file
+			
+			
+			extract PRD21
+useridalias ogg21 domain igprd21
+exttrail /opt/app/ogg/deploy/igprd21/var/lib/data/BB
+USERID OGG@IGPRD21, PASSWORD Zaq1Xsw2#
+
+SETENV (ORACLE_HOME = '/opt/app/oracle/product/12.1.0/dbhome_1')
+SETENV (ORACLE_SID = 'IGPRD21')
+trace /opt/app/ogg/deploy/igprd21/var/lib/db/dirbdb/TEST.trc
+DISCARDFILE /opt/app/ogg/deploy/igprd21/var/lib/db/dirbdb/TEST.DSC
+GETUPDATEBEFORES
+LOGALLSUPCOLS
+UPDATERECORDFORMAT FULL
+DDL INCLUDE ALL;
+TABLE VM1DTA.* tokens (tk-scn = @getenv('ORATRANSACTION', 'SCN'));
+
+
+
+Click Register 
+Save it
+
+Stpe 5 : add EXTTRAIL in ADMINCLIENT
+         in server 
+         source environment
+         cd $OGG_HOME/bin
+         adminclient
+         connect http://jpaigdbp03:8200 as oggadmin password Zaq1Xsw2#
+         ADD EXTTRAIL /opt/app/ogg/deploy/igprd21/var/lib/data/BB, EXTRACT PRD21
+         START EXTRACT PRD21
+         
+
+
+
+
+
+
+
+ 
+     
+          

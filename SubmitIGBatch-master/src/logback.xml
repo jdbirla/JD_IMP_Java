@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Normal console appender -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %-5level [%thread] %logger - %message%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File rolling appender -->
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:\logs\ckp\submitbatch\batch-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %-5level [%thread] %logger - %message%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- Turn off some annoying logger -->
+    <logger name="com.quipoz.COBOLFramework.database.connection" level="OFF" additivity="false">
+    </logger>
+    <logger name="org.hibernate" level="OFF" additivity="false">
+    </logger>
+
+    <!-- Logger for integral -->
+    <logger name="com.csc" level="OFF" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+		<appender-ref ref="rollingFile" /> 
+    </logger>
+    <logger name="com.quipoz" level="OFF" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+		<appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="org.springframework" level="OFF" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+		<appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="org.quartz" level="OFF" additivity="false">
+        <!-- <appender-ref ref="console" /> -->
+		<appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="com.csc.database.IntegralDataSource" level="OFF" additivity="false">
+    </logger>
+    <root level="DEBUG">
+        <appender-ref ref="console" /> 
+		<appender-ref ref="rollingFile" /> 
+    </root>
+</configuration>
