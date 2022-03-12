@@ -1,1 +1,1 @@
-# Learning from chandan from DXC
+# Learnings from DXC's Chandan
